@@ -17,6 +17,6 @@ export default defineConfig({
     }
   },
   base: process.env.NODE_ENV === 'production' 
-    ? '/CICD/'  // 替换为你的仓库名
+    ? '/CICD2/'  // 替换为你的仓库名
     : '/',
 })
