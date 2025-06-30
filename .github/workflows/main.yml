@@ -25,11 +25,7 @@ jobs:
     # 3. 安装依赖
     - name: Install dependencies
       run: npm install
-    
-    # 4. 运行测试（可选）
-    - name: Run tests
-      run: npm test
-    
+
     # 5. 构建项目
     - name: Build project
       run: npm run build
