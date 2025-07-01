@@ -34,6 +34,6 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.CICD2 }}
+        github_token: ${{ secrets.autoDeploy }}
         publish_dir: ./dist # 构建输出目录
         publish_branch: gh-pages  # 确保指定目标分支
