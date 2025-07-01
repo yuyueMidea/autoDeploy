@@ -10,7 +10,7 @@ const routeList = [
 
 const router = createRouter(
     {
-        history: createWebHashHistory(),
+        history: createWebHashHistory('/autoDeploy/'),
         routes: [
             {
                 path: '/',
