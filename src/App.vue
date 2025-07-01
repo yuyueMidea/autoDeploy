@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div id="app_wrapper">
     <nav class="app_header">
       <router-link to="/">主页</router-link> | 
@@ -69,4 +69,14 @@ export default {
   height: calc(100vh - 60px);
   overflow-y: auto;
 }
-</style>
+</style> -->
+
+<template>
+  <router-view />
+</template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>

@@ -1,0 +1,109 @@
+<template>
+    <div class="layout">
+        <div class="top-bar">
+            <p>Vue3 路由菜单示例</p>
+            <div class="user-info">
+                <span>欢迎，管理员</span>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="side-menu">
+                <ul>
+                    <li v-for="(item, k) in routeMetaList" :key="k">
+                        <router-link :to="item.path">{{item.name}}</router-link>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-area">
+                <router-view />
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { onMounted } from 'vue';
+
+const props = defineProps({
+    title: {
+        type: String,
+        default: ''
+    },
+    version: {
+        type: String,
+        default: ''
+    },
+    routeList: {
+        type: Array,
+        default:()=>[]
+    }
+});
+const routeMetaList = props.routeList.filter(c=>c.name!=='NotFound')
+onMounted(() => {
+    console.log(props.title, props.version, props.routeList);
+}) 
+  
+</script>
+
+<style scoped>
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.layout .top-bar {
+  background-color: #ccc;
+  color: white;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.layout .user-info {
+  font-size: 14px;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+.main-content .side-menu {
+  width: 200px;
+  background-color: #34495e;
+  height: 100%;
+  color: white;
+}
+
+.main-content .side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-content .side-menu li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #2c3e50;
+}
+
+.main-content .side-menu li:hover {
+  background-color: #2c3e50;
+}
+
+.main-content .side-menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.main-content .side-menu a.router-link-exact-active {
+  color: #42b983;
+  font-weight: bold;
+}
+
+.content-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+</style>
