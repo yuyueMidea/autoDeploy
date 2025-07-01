@@ -1,0 +1,1 @@
+import{_ as n}from"./index-CIdekIYI.js";import{b as o,d as r,F as e,o as s}from"./vendor-CrVx7e56.js";const a={};function l(c,t){return s(),o(e,null,[t[0]||(t[0]=r("h1",null,"Contract us",-1)),t[1]||(t[1]=r("p",null,"33333333",-1))],64)}const u=n(a,[["render",l]]);export{u as default};
