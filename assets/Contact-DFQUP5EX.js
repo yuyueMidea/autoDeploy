@@ -1,1 +1,0 @@
-import{_ as r,d as a}from"./index-BBM5SU9x.js";import{t as s}from"./vendor-LvLS8rNT.js";const o={computed:{eggType(){return this.$route.params.eggType},dataEgg(){return a.find(t=>t.type===this.eggType)}}};function p(t,n,g,c,d,e){return s(e.dataEgg.description)}const f=r(o,[["render",p]]);export{f as default};
