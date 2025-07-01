@@ -1,1 +1,0 @@
-import{_ as e}from"./index-Dcxi-Q73.js";import{c as o,o as c}from"./vendor-LvLS8rNT.js";const r={};function t(n,s){return c(),o("h1",null,"主页面Home,yy3")}const m=e(r,[["render",t]]);export{m as default};
