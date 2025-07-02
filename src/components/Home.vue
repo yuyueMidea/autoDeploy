@@ -10,7 +10,7 @@
         <button @click="clearLogs" class="btn">清除日志</button>
     </div>
     <div class="p-5 m-5 border">
-        <label for="">点击事件追踪</label>
+        <label for="chk2"><input type="checkbox" name="rclick" id="chk2" v-model="app1store.logClickFlag">点击事件追踪</label>
         <button @click="queryEvtLogs" class="btn">查询日志</button>
         <button @click="clearEvtLogs" class="btn">清除日志</button>
         <div class="p-5 m-5 border inline">
