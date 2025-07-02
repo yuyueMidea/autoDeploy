@@ -1,5 +1,23 @@
 import { createApp } from 'vue'
 // import './style.css'
+import './custom.css'
 import App from './App.vue'
 import router from './router'
-createApp(App).use(router).mount('#app')
+import { createPinia } from 'pinia'
+import trackClick from './utils/trackClick'
+import { permissionDirective, permissionMixin, setPermissions } from './utils/permission'
+// createApp(App).use(router).mount('#app')
+
+
+const app = createApp(App);
+app.use(createPinia());
+
+// 注册点击追踪指令
+app.directive('track', trackClick);
+// 注册全局权限指令
+app.directive('permission', permissionDirective);
+// 注册全局混入
+app.mixin(permissionMixin);
+
+app.use(router);
+app.mount('#app');
