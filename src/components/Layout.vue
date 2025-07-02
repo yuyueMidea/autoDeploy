@@ -1,9 +1,10 @@
 <template>
     <div class="layout">
         <div class="top-bar">
-            <p>Vue3 路由菜单示例</p>
-            <div class="user-info">
-                <span>欢迎，管理员</span>
+            <div class="p-5">{{app1store.cmenuName}}</div>
+            <div class="user-info" v-if="app1store.isAuthenticated">
+                <span>welcome, {{ app1store.crole }}</span>
+                <button @click="handleLogout" class="btn">退出</button>
             </div>
         </div>
         <div class="main-content">
@@ -15,9 +16,8 @@
                 </ul>
             </div>
             <div class="content-area">
-                <!-- <router-view /> -->
                 <router-view v-slot="{ Component }">
-                  <KeepAlive include="calcPage">
+                  <KeepAlive :include="app1store.cachedComList">
                     <component :is="Component" />
                     </KeepAlive>
                 </router-view>
@@ -27,26 +27,25 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import router from '../router';
+import { useAppStore } from '../store/useCommonStore';
+import { setPermissions } from '../utils/permission';
 const props = defineProps({
-    title: {
-        type: String,
-        default: ''
-    },
-    version: {
-        type: String,
-        default: ''
-    },
-    routeList: {
-        type: Array,
-        default:()=>[]
-    }
+  routeList: {
+    type: Array,
+    default:()=>[]
+  }
 });
 const routeMetaList = props.routeList.filter(c=>c.name!=='NotFound')
-onMounted(() => {
-    console.log(props.title, props.version, props.routeList);
-}) 
-  
+
+const app1store = useAppStore();
+//---退出登录
+const handleLogout = () => {
+  app1store.logOut();
+  // 退出登录后跳转登录界面
+  router.push('/login');
+  setPermissions([]);
+}
 </script>
 
 <style scoped>
