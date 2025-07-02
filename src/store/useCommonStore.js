@@ -6,6 +6,7 @@ export const useAppStore = defineStore('app1',{
         count: 0,
         cmenuName: '',
         logRouterFlag: false,
+        logClickFlag: false,
         loading: false,
         error: '',
         username: '',
