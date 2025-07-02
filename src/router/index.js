@@ -1,16 +1,19 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import Layout from '@/components/Layout.vue'
 
 const routeList = [
     {path: '/', name: '首页', component: () => import('@/components/Home.vue')},
     {path: '/about', name: '关于', component: () => import('@/components/About.vue')},
     {path: '/contract', name: '联系我们', component: () => import('@/components/Contract.vue')},
+    {path: '/calculation', name: 'worker计算', component:  () => import('@/components/CalculationView.vue') },
     {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/components/NotFound.vue'),}
 ];
 
 const router = createRouter(
     {
-        history: createWebHashHistory('/autoDeploy/'),
+        // history: createWebHistory(),
+        // history: createWebHashHistory('/autoDeploy/'),  // 使用 hash 模式
+        history: createWebHashHistory(import.meta.env.BASE_URL), // 使用环境变量
         routes: [
             {
                 path: '/',

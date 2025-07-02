@@ -15,7 +15,12 @@
                 </ul>
             </div>
             <div class="content-area">
-                <router-view />
+                <!-- <router-view /> -->
+                <router-view v-slot="{ Component }">
+                  <KeepAlive include="calcPage">
+                    <component :is="Component" />
+                    </KeepAlive>
+                </router-view>
             </div>
         </div>
     </div>
@@ -23,7 +28,6 @@
 
 <script setup>
 import { onMounted } from 'vue';
-
 const props = defineProps({
     title: {
         type: String,
