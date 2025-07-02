@@ -1,0 +1,1 @@
+import{b as n,d as e,g as r,F as a,s as l,o as u}from"./vendor-0UIWjnaV.js";const d={__name:"NotFound",setup(c){const t=l(),s=()=>{console.log("-----------backToHome"),t.push("/")};return(m,o)=>(u(),n(a,null,[o[1]||(o[1]=e("h1",null,"404",-1)),e("p",null,[o[0]||(o[0]=r("你所寻找的页面不存在！ ")),e("button",{onClick:s},"回到首页")])],64))}};export{d as default};

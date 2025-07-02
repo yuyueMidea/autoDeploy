@@ -1,0 +1,1 @@
+(function(){"use strict";function r(s){let e=0;for(let t=0;t<s.maxIterations;t++)e+=Math.sqrt(t)*Math.random(),t%1e5===0&&self.postMessage({type:"progress",progress:t/s.maxIterations*100});return e}self.onmessage=function(s){const{type:e,data:t}=s.data;if(e==="start"){const a=r(t);self.postMessage({type:"result",result:a})}}})();
