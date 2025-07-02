@@ -1,8 +1,11 @@
 import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import Layout from '@/components/Layout.vue'
+import { logToLocalStorage } from '../utils/log';
+import { useAppStore } from '../store/useCommonStore';
 
 const routeList = [
     {path: '/', name: '首页', component: () => import('@/components/Home.vue')},
+    {path: '/login', name: '登录', component: () => import('@/components/LoginPage.vue')},
     {path: '/about', name: '关于', component: () => import('@/components/About.vue')},
     {path: '/contract', name: '联系我们', component: () => import('@/components/Contract.vue')},
     {path: '/calculation', name: 'worker计算', component:  () => import('@/components/CalculationView.vue') },
@@ -18,8 +21,6 @@ const router = createRouter(
             {
                 path: '/',
                 props: { 
-                    title: '关于我们',
-                    version: '1.0.0',
                     routeList
                 },
                 component: Layout,
@@ -31,6 +32,21 @@ const router = createRouter(
             // { path: '/:pathMatch(.*)*', component: () => import('../components/NotFound.vue') }
         ]
     }
-)
+);
+
+// 路由导航追踪
+
+router.afterEach((to, from) => {
+    const app1store = useAppStore();
+    app1store.setMenuName(to.name)
+    if(app1store.logRouterFlag) {
+        logToLocalStorage({
+            from: from.fullPath,
+            to: to.fullPath,
+            routeName: to.name || 'unnamed',
+            timestamp: new Date().toISOString(),
+        })
+    }
+})
 
 export default router
