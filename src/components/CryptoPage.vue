@@ -15,55 +15,51 @@
                 <input type="text" v-model="token" class="border p-5 m-5" />
             </p>
             <p class="p-5">
-                <button v-track.click="'cryptoBtn'" v-permission="'admin'" class="btn" @click="setEncrypto">加密</button>
-                <button v-track.click="'cryptoBtn'" v-permission="'admin'" class="btn" @click="getDecryptData">解密</button>
-                <span class="inline w-500">{{ uKey }}</span>
+                完整流程说明:
+                1. 生成密钥 → 2. 导出密钥为字符串 → 3. 存储密钥到安全位置 → 4. 加密用户数据 → 5. 解密时恢复密钥
             </p>
+
+            <p class="p-5">
+                <button v-track.click="'setcryptoBtn'" v-permission="'admin'" class="btn" @click="setEncrypto">加密</button>
+                <button v-track.click="'getcryptoBtn'" v-permission="'admin'" class="btn" @click="getDecryptData">解密</button>
+            </p>
+            <div class="p-5">
+                <p class="m-5">Base64 格式的密钥字符串: {{ keyStr }}</p>
+                <p class="m-5">加密结果: {{ encryptedData }}</p>
+                <p class="m-5">解密结果: {{ decryptedData }}</p>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
-import { decryptData, encryptData, exportKeyToString, generateEncryptionKey } from '../utils/CryptoUtil';
+import { decryptData, encryptData, exportKeyToString, generateEncryptionKey, importKeyFromString } from '../utils/CryptoUtil';
 
 const username = ref('Alice');
 const email = ref('alice@example.com');
 const token = ref('sensitive-auth-token');
-const uKey = ref(null);
+const keyStr = ref(null);
+const encryptedData = ref(null);
+const decryptedData = ref(null);
 
-const setCrypto = async()=>{
-    console.log('============setCrypto========', {username, email, token })
-    const res = await mockData();
-    console.log(666, {res})
-}
-const mockData = async()=>{
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('resdata')
-        }, 2000);
-    })
-}
 const setEncrypto = async()=>{
     // 示例：加密用户信息并存储到 localStorage
     try {
         // 1. 生成密钥（实际应用中应从安全来源获取）
-        uKey.value = await generateEncryptionKey();
-        const keyStr = await exportKeyToString(key);
-        console.log(77,{keyStr})
+        const uKeyValue = await generateEncryptionKey();
+        // 2. 导出密钥为字符串
+        keyStr.value = await exportKeyToString(uKeyValue);
         const userInfo = { 
             name: username.value, 
             email: email.value, 
             token: token.value
         };
-        console.log(uKey.value , 'keyStr_: ', userInfo )
         
-        // 2. 要加密的用户数据
-        // 3. 加密数据
-        const encryptedData = await encryptData(uKey.value, userInfo);
+        // 3. 要加密的用户数据
+        encryptedData.value = await encryptData(uKeyValue, userInfo);
         
         // 4. 存储到 localStorage（密钥需单独安全保存！）
-        localStorage.setItem("encryptedUserData", encryptedData);
-        console.log("加密数据已存储");
+        localStorage.setItem("encryptedUserData", encryptedData.value);
     } catch (error) {
         console.error("加密失败:", error);
     }
@@ -75,8 +71,9 @@ const getDecryptData = async()=>{
         // 5. 解密演示（从 localStorage 读取）
         const storedData = localStorage.getItem("encryptedUserData");
         if (storedData) {
-          const decrypted = await decryptData(uKey.value, storedData);
-          console.log("解密结果:", decrypted);
+            // 解密时恢复密钥
+            const ckeyval = await importKeyFromString(keyStr.value);
+            decryptedData.value = await decryptData(ckeyval, storedData);
         }
     } catch (error) {
         console.error("解密失败:", error);
