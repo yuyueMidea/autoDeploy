@@ -1,1 +1,0 @@
-import{a as s,b as e,h as a,F as r,B as l,o as u}from"./vendor-Dl_ZJaQE.js";const k={__name:"NotFound",setup(c){const t=l(),n=()=>{console.log("-----------backToHome"),t.push("/")};return(m,o)=>(u(),s(r,null,[o[1]||(o[1]=e("h1",null,"404",-1)),e("p",null,[o[0]||(o[0]=a("你所寻找的页面不存在！ ")),e("button",{onClick:n},"回到首页")])],64))}};export{k as default};
