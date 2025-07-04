@@ -7,8 +7,10 @@ const routeList = [
     {path: '/', name: '首页', component: () => import('@/components/Home.vue')},
     {path: '/login', name: '登录', component: () => import('@/components/LoginPage.vue')},
     {path: '/about', name: '关于', component: () => import('@/components/About.vue')},
+    {path: '/cryptoPage', name: '数据加密', component: () => import('@/components/CryptoPage.vue')},
     {path: '/contract', name: '联系我们', component: () => import('@/components/Contract.vue')},
     {path: '/calculation', name: 'worker计算', component:  () => import('@/components/CalculationView.vue') },
+    {path: '/webSocketPage', name: 'WebSocket连接', component:  () => import('@/components/WebSocketPage.vue') },
     {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/components/NotFound.vue'),}
 ];
 
