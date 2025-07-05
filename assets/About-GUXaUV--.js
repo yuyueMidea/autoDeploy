@@ -1,1 +1,0 @@
-import{_ as n}from"./index-yHoDRhj7.js";import{a as e,b as o,F as a,f as i,o as r,t as l}from"./vendor-CXXQGJ-z.js";const p={name:"About"},c={key:"item"};function u(m,t,_,d,f,$){return r(),e("div",null,[t[0]||(t[0]=o("h2",null,"关于我们",-1)),(r(),e(a,null,i(22,s=>o("p",c,"这是关于页面内容 "+l(s),1)),64))])}const x=n(p,[["render",u]]);export{x as default};
