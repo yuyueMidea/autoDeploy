@@ -1,1 +1,0 @@
-import{_ as n}from"./index-BP3ReSyr.js";import{a as e,o,b as r,F as a,f as i,t as l}from"./vendor-D0inrJyg.js";const p={name:"About"},c={key:"item"};function u(m,t,_,d,f,$){return o(),e("div",null,[t[0]||(t[0]=r("h2",null,"关于我们",-1)),(o(),e(a,null,i(22,s=>r("p",c,"这是关于页面内容 "+l(s),1)),64))])}const x=n(p,[["render",u]]);export{x as default};
