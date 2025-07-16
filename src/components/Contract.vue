@@ -7,7 +7,8 @@
       <template v-else>
         <div class="table-container">
             <h2>用户列表
-                <button @click="addUser">新增</button>
+                <button @click="fetchUsersList" class="p-5 m-5">查询数据</button>
+                <button @click="addUser" class="p-5 m-5">新增</button>
             </h2>
             <ModalDialog v-if="showModal" :show="showModal" :form="userForm" :onClose="closeModal" :onSave="handleSave" />
             <table>
@@ -42,6 +43,8 @@
 import { ref, onMounted } from 'vue'
 import SkeletonItem from './SkeletonItem.vue'
 import ModalDialog from './ModalDialog.vue'
+// 引入数据库相关配置
+import { supabase } from '../utils/supaBaseCFG'
 const showModal = ref(false)
 
 function openModal() {
@@ -57,13 +60,24 @@ const generateRandomString = (length) => {
     .map(byte => chars[byte % chars.length])
     .join('');
 }
-const loading = ref(true)
+const loading = ref(false)
 // 用户列表数据
-const userList = ref([
-    {id: 'Kho5GIoLa3irqGRt', name: '张三', age:33, email: 'admin@163.com'},
-    {id: 'BvwQzKClL50gI2sA', name: '李四', age:24, email: 'user@163.com'},
-    {id: 'BvwQzKClL123I2sA', name: '王五', age:42, email: 'guest@163.com'},
-])
+const userList = ref([]);
+// 1. 查询数据
+const fetchUsersList = async () => {
+  loading.value = true
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+    
+    if (error) {
+        console.error('Fetch error:', error)
+    }else {
+        // console.log('fdata_: ', data )
+        userList.value = data;
+        loading.value = false
+    }
+}
 const userForm = ref({
     id: '',
     name: '',
@@ -71,18 +85,11 @@ const userForm = ref({
     age: '',
 })
 onMounted(() => {
-    setTimeout(() => {
-        loading.value = false
-    }, 1000) // 模拟异步加载
+  fetchUsersList()
 })
-const deleteUser = (id) =>{
-    if (confirm('确定要删除这个用户吗？')) {
-        // console.warn(id, '--------dellll')
-        userList.value = userList.value.filter(c=>c.id !== id);
-    }
-}
+
 const editUser = (uform) =>{
-    console.log('Userid:', uform);
+    // console.log('Userid:', uform);
     userForm.value = uform;
     openModal();
 }
@@ -96,15 +103,54 @@ const addUser = ()=>{
     openModal();
 }
 const handleSave = (saveData)=>{
-    console.log('==resdata==========', saveData )
+    // console.log('==resdata==========', saveData )
     const cindex = userList.value.findIndex(c=>c.id ===saveData.id);
     //更新用户
     if(cindex !== -1) {
-        userList.value[cindex] = {...saveData};
+        // userList.value[cindex] = {...saveData};
+        updateUser(saveData)
     } else {
         //新增用户
-        userList.value.push(saveData)
+        // userList.value.push(saveData)
+        insertUser(saveData)
     }
+}
+const insertUser = async(resdata)=>{
+  const { data, error } = await supabase
+  .from('users')
+  .insert([ resdata ])
+  .select()
+  if (error) {
+    console.error('addUser error:', error)
+  }else {
+    console.log('add_new_data_: ', data )
+    fetchUsersList()
+  }
+}
+const updateUser = async(resdata)=>{
+  console.log('updata:', resdata )
+  const { error } = await supabase
+    .from('users')
+    .update(resdata)
+    .eq('id', resdata.id)
+  if (error) {
+    console.error('updateUser_error:', error)
+  }else {
+    fetchUsersList()
+  }
+}
+const deleteUser = async(id)=>{
+  if (confirm('确定要删除这个用户吗？' + id)) {
+    const { error } = await supabase
+    .from('users')
+    .delete()
+    .eq('id', id)
+    if (error) {
+      console.error('del_User error:', error)
+    }else {
+      fetchUsersList()
+    }
+  }
 }
 </script>
 <style scoped>
