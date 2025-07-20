@@ -9,9 +9,14 @@ const routeList = [
     {path: '/about', name: '关于', component: () => import('@/components/About.vue')},
     {path: '/cryptoPage', name: '数据加密', component: () => import('@/components/CryptoPage.vue')},
     {path: '/contract', name: '联系我们', component: () => import('@/components/Contract.vue')},
+    {path: '/formDesigner', name: '表单设计器', component: () => import('@/components/FormDesigner.vue')},
+    {path: '/projectList', name: '项目列表', component: () => import('@/components/ProjectList.vue')},
+    {path: '/projectDetail/:id', name: '项目详情', component: () => import('@/components/ProjectDetail.vue'), props:true, hide:true },
     {path: '/calculation', name: 'worker计算', component:  () => import('@/components/CalculationView.vue') },
     {path: '/webSocketPage', name: 'WebSocket连接', component:  () => import('@/components/WebSocketPage.vue') },
-    {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/components/NotFound.vue'),  hide: true }
+    {path: '/workflowView', name: '工作流', component:  () => import('@/components/WorkflowView.vue') },
+    {path: '/BpmnContainerView', name: '工作流2', component:  () => import('@/components/BpmnContainerView.vue') },
+    {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/components/NotFound.vue'), hide: true,}
 ];
 
 const router = createRouter(
