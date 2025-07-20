@@ -9,7 +9,7 @@
         </div>
         <div class="main-content">
             <div class="side-menu">
-                <ul>
+                <ul class="menu-list">
                     <li v-for="(item, k) in routeMetaList" :key="k">
                         <router-link :to="item.path">{{item.name}}</router-link>
                     </li>
@@ -105,23 +105,26 @@ const handleLogout = () => {
   margin: 0;
 }
 
-.main-content .side-menu li {
-  padding: 15px 20px;
-  border-bottom: 1px solid #2c3e50;
+.menu-list li {
+  border-bottom: 1px solid #666;
 }
 
-.main-content .side-menu li:hover {
+.menu-list li a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #ecf0f1;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.menu-list li a:hover {
   background-color: #2c3e50;
 }
 
-.main-content .side-menu a {
+.menu-list li a.router-link-exact-active {
+  background-color: #42b983;
   color: white;
-  text-decoration: none;
-}
-
-.main-content .side-menu a.router-link-exact-active {
-  color: #42b983;
-  font-weight: bold;
 }
 
 .content-area {
