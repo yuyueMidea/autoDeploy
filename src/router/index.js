@@ -11,7 +11,7 @@ const routeList = [
     {path: '/contract', name: '联系我们', component: () => import('@/components/Contract.vue')},
     {path: '/calculation', name: 'worker计算', component:  () => import('@/components/CalculationView.vue') },
     {path: '/webSocketPage', name: 'WebSocket连接', component:  () => import('@/components/WebSocketPage.vue') },
-    {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/components/NotFound.vue'),}
+    {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/components/NotFound.vue'),  hide: true }
 ];
 
 const router = createRouter(
