@@ -17,9 +17,11 @@
             </div>
             <div class="content-area">
                 <router-view v-slot="{ Component }">
-                  <KeepAlive :include="app1store.cachedComList">
-                    <component :is="Component" />
+                  <transition name="fade" mode="out-in">
+                    <KeepAlive :include="app1store.cachedComList">
+                      <component :is="Component" />
                     </KeepAlive>
+                  </transition>
                 </router-view>
             </div>
         </div>
@@ -36,7 +38,7 @@ const props = defineProps({
     default:()=>[]
   }
 });
-const routeMetaList = props.routeList.filter(c=>c.name!=='NotFound')
+const routeMetaList = props.routeList.filter(c=> !c.hide)
 
 const app1store = useAppStore();
 //---退出登录
@@ -49,6 +51,24 @@ const handleLogout = () => {
 </script>
 
 <style scoped>
+/* 路由过渡动画 */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .layout {
   display: flex;
   flex-direction: column;
@@ -107,6 +127,7 @@ const handleLogout = () => {
 .content-area {
   flex: 1;
   padding: 20px;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 </style>
