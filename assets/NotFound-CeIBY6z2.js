@@ -1,1 +1,0 @@
-import{a as s,o as a,b as e,h as r,F as l,H as u}from"./vendor-D_AaPtq8.js";const k={__name:"NotFound",setup(c){const t=u(),n=()=>{console.log("-----------backToHome"),t.push("/")};return(m,o)=>(a(),s(l,null,[o[1]||(o[1]=e("h1",null,"404",-1)),e("p",null,[o[0]||(o[0]=r("你所寻找的页面不存在！ ")),e("button",{onClick:n},"回到首页")])],64))}};export{k as default};
