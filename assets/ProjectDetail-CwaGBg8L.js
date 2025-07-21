@@ -1,0 +1,1 @@
+import{r as s}from"./index-DGSO2Pzb.js";import{e as a,o as i,f as t,t as c}from"./vendor-DpYf_-LF.js";const n={class:"pro_detail"},_={__name:"ProjectDetail",props:{id:{type:String,required:!0}},setup(e){const o=e,r=()=>{s.push("/projectList")};return(p,l)=>(i(),a("div",n,[t("h2",null,"detail, id:"+c(o.id),1),t("p",null,[t("button",{onClick:r},"返回列表")])]))}};export{_ as default};
