@@ -6,6 +6,9 @@
       <template #header>
         <p>共 {{ users.length }} 个</p>
       </template>
+      <template #default="{unit}">
+        <span>{{ unit.id }}</span>
+      </template>
       <!-- Footer 插槽内容 -->
        <template #footer>
         <button @click="loadMore">加载更多</button>

@@ -8,7 +8,7 @@
          <div class="list-content">
             <li v-for="(item, idx) in items" :key="idx" class="list-item">
                 <!-- 默认插槽，传递当前项和索引 -->
-                 <slot :item="item" :index="idx">{{ item }}</slot>
+                 <slot :unit="item" :index="idx">{{ item }}</slot>
             </li>
          </div>
 

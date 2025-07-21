@@ -18,6 +18,7 @@
                 完整流程说明:
                 1. 生成密钥 → 2. 导出密钥为字符串 → 3. 存储密钥到安全位置 → 4. 加密用户数据 → 5. 解密时恢复密钥
             </p>
+            <p>加密/解密时：必须使用 CryptoKey 对象; 存储时：才转换为字符串（Base64/JWK 格式）</p>
 
             <p class="p-5">
                 <button v-track.click="'setcryptoBtn'" v-permission="'admin'" class="btn" @click="setEncrypto">加密</button>
@@ -45,18 +46,18 @@ const decryptedData = ref(null);
 const setEncrypto = async()=>{
     // 示例：加密用户信息并存储到 localStorage
     try {
-        // 1. 生成密钥（实际应用中应从安全来源获取）
-        const uKeyValue = await generateEncryptionKey();
+        // 1. 生成密钥（实际应用中应从安全来源获取）【加密密钥】
+        const CryptoKey = await generateEncryptionKey();
         // 2. 导出密钥为字符串
-        keyStr.value = await exportKeyToString(uKeyValue);
+        keyStr.value = await exportKeyToString(CryptoKey);
         const userInfo = { 
             name: username.value, 
             email: email.value, 
             token: token.value
         };
         
-        // 3. 要加密的用户数据
-        encryptedData.value = await encryptData(uKeyValue, userInfo);
+        // 3. 密钥 + 要加密的用户数据---》【加密时直接使用 CryptoKey 对象，而非字符串密钥。】
+        encryptedData.value = await encryptData(CryptoKey, userInfo);
         
         // 4. 存储到 localStorage（密钥需单独安全保存！）
         localStorage.setItem("encryptedUserData", encryptedData.value);
@@ -71,8 +72,9 @@ const getDecryptData = async()=>{
         // 5. 解密演示（从 localStorage 读取）
         const storedData = localStorage.getItem("encryptedUserData");
         if (storedData) {
-            // 解密时恢复密钥
+            // 解密时恢复密钥【从存储的字符串中通过 importKey 恢复 CryptoKey 对象】
             const ckeyval = await importKeyFromString(keyStr.value);
+            // 结合恢复的密钥和 localStorage 中的加密数据 + IV 进行解密
             decryptedData.value = await decryptData(ckeyval, storedData);
         }
     } catch (error) {

@@ -28,8 +28,8 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.age }}</td>
                         <td class="actions">
-                            <button @click="editUser(user)" class="p-5 m-5">编辑</button>
-                            <button @click="deleteUser(user.id)" class="p-5">删除</button>
+                            <button @click="editUser(user)" class="m-5">编辑</button>
+                            <button @click="deleteUser(user.id)" class="m-5">删除</button>
                         </td>
                     </tr>
                 </tbody>
