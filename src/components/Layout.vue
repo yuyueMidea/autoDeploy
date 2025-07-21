@@ -1,14 +1,24 @@
 <template>
     <div class="layout">
         <div class="top-bar">
-            <div class="p-5">{{app1store.cmenuName}}</div>
+          <div class="topbar_left">
+            <button class="menu-toggle" :class="{'icon-collapsed': app1store.sideBarCollapse}" @click="toggleMenu">
+              <span class="icon">☰</span>
+            </button>
+            <span class="p-5">{{app1store.cmenuName}}</span>
+          </div>
+          <div class="topbar_right">
+            <button class="theme-toggle" @click="toggleTheme">
+              {{ theme === 'light' ? '🌙' : '☀️' }}
+            </button>
+          </div>
             <div class="user-info" v-if="app1store.isAuthenticated">
                 <span>welcome, {{ app1store.crole }}</span>
                 <button @click="handleLogout" class="btn">退出</button>
             </div>
         </div>
         <div class="main-content">
-            <div class="side-menu">
+            <div class="side-menu" :class="{'menu-collapsed': app1store.sideBarCollapse}">
                 <ul class="menu-list">
                     <li v-for="(item, k) in routeMetaList" :key="k">
                         <router-link :to="item.path">{{item.name}}</router-link>
@@ -29,9 +39,11 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
 import router from '../router';
 import { useAppStore } from '../store/useCommonStore';
 import { setPermissions } from '../utils/permission';
+import { applyTheme, getSavedTheme } from '../utils/theme'
 const props = defineProps({
   routeList: {
     type: Array,
@@ -48,6 +60,21 @@ const handleLogout = () => {
   router.push('/login');
   setPermissions([]);
 }
+const toggleMenu = ()=>{
+  app1store.toggleCollapse()
+}
+
+const theme = ref(getSavedTheme())
+    
+const toggleTheme = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light'
+  applyTheme(theme.value)
+}
+
+onMounted(() => {
+  applyTheme(theme.value)
+})
+
 </script>
 
 <style scoped>
@@ -75,16 +102,28 @@ const handleLogout = () => {
   height: 100vh;
 }
 .layout .top-bar {
-  background-color: #ccc;
-  color: white;
+  height: 60px;
+  /* background-color: #666;
+  color: white; */
   padding: 5px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+/* 添加主题切换按钮样式 */
+.top-bar .theme-toggle {
+  background: none;
+  border: none;
+  color: var(--topbar-text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-right: 15px;
+}
 
-.layout .user-info {
-  font-size: 14px;
+/* 添加菜单切换按钮样式 */
+.layout .top-bar .menu-toggle.icon-collapsed .icon{
+  display: inline-block; /* 让 transform 生效 */
+  transform: rotate(90deg); /* 顺时针旋转90度 */
 }
 
 .main-content {
@@ -94,9 +133,19 @@ const handleLogout = () => {
 }
 .main-content .side-menu {
   width: 200px;
-  background-color: #34495e;
+  /* background-color: #34495e; */
+  /* color: white; */
   height: 100%;
-  color: white;
+  overflow-y: auto;
+}
+/* 响应式设计 */
+@media (max-width: 1000px) {
+  .main-content .side-menu {
+    width: 150px;
+  }
+}
+.main-content .side-menu.menu-collapsed {
+  width: 0;
 }
 
 .main-content .side-menu ul {
@@ -106,16 +155,20 @@ const handleLogout = () => {
 }
 
 .menu-list li {
+  height: 40px;
   border-bottom: 1px solid #666;
 }
 
 .menu-list li a {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 8px 20px;
   color: #ecf0f1;
   text-decoration: none;
   transition: background-color 0.3s;
+  white-space: nowrap;        /* 禁止换行 */
+  overflow: hidden;           /* 隐藏超出内容 */
+  text-overflow: ellipsis;    /* 溢出内容显示省略号 */
 }
 
 .menu-list li a:hover {
