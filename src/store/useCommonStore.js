@@ -15,6 +15,7 @@ export const useAppStore = defineStore('app1',{
         isAuthenticated: false,
         passwordLevel: 0,
         cachedComList: [],
+        sideBarCollapse: false,
     }),
     actions: {
         increment() {
@@ -40,13 +41,24 @@ export const useAppStore = defineStore('app1',{
             localStorage.removeItem('authToken');
         },
         login(uname, pwd) {
-            if(uname === 'admin') {
+            if(uname === 'superAdmin') {
+                this.setPassword(5);
+                this.setCrole(uname);
+                this.setisAuthenticated(true);
+                localStorage.setItem('authToken', `mock-jwt-token-${pwd}`);
+                setPermissions(['admin', 'guest']);
+            }else if(uname === 'admin') {
                 this.setPassword(3);
                 this.setCrole(uname);
                 this.setisAuthenticated(true);
                 localStorage.setItem('authToken', `mock-jwt-token-${pwd}`);
                 // 模拟设置用户按钮权限，【管理员？ 访客？或者其他？】
                 setPermissions(['admin', 'guest']);
+            }else if(uname === 'operator') {
+                this.setPassword(2);
+                this.setCrole(uname);
+                this.setisAuthenticated(true);
+                setPermissions([ 'operator']);
             }else if(uname === 'guest') {
                 this.setPassword(1);
                 this.setCrole(uname);
@@ -64,6 +76,9 @@ export const useAppStore = defineStore('app1',{
         },
         setcachedComList(clist) {
             this.cachedComList = clist;
+        },
+        toggleCollapse() {
+            this.sideBarCollapse = !this.sideBarCollapse;
         }
     }
 })
