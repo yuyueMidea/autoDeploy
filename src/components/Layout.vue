@@ -20,7 +20,7 @@
         <div class="main-content">
             <div class="side-menu" :class="{'menu-collapsed': app1store.sideBarCollapse}">
                 <ul class="menu-list">
-                    <li v-for="(item, k) in routeMetaList" :key="k">
+                    <li v-for="(item, k) in routeMetaList" :key="k" :title="item.meta ? `${item.meta.requiresAuth} only` : ''">
                         <router-link :to="item.path">{{item.name}}</router-link>
                     </li>
                 </ul>
@@ -121,8 +121,14 @@ onMounted(() => {
 }
 
 /* 添加菜单切换按钮样式 */
-.layout .top-bar .menu-toggle.icon-collapsed .icon{
+.layout .top-bar .menu-toggle {
+  padding: 0; width: 22px;
+}
+.layout .top-bar .menu-toggle .icon{
   display: inline-block; /* 让 transform 生效 */
+  transition: transform 0.3s ease;
+}
+.layout .top-bar .menu-toggle.icon-collapsed .icon{
   transform: rotate(90deg); /* 顺时针旋转90度 */
 }
 
