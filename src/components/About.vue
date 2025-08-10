@@ -26,7 +26,7 @@ const generateRandomString = (length) => {
     .map(byte => chars[byte % chars.length])
     .join('');
 }
-// 初始化user数据列表，生成几条
+// 初始化user数据列表，生成N条数据
 const users = ref([]);
 for(let i=0;i<5;i++) {
   users.value.push({ id: generateRandomString(16) })
@@ -40,3 +40,4 @@ const loadMore = () => {
 }
 
 </script>
+
