@@ -9,7 +9,6 @@ const routeList = [
     {path: '/login', name: '登录', component: () => import('@/components/LoginPage.vue')},
     {path: '/about', name: '关于', component: () => import('@/components/About.vue')},
     {path: '/cryptoPage', name: '数据加密', component: () => import('@/components/CryptoPage.vue')},
-    {path: '/contract', name: '用户管理', component: () => import('@/components/Contract.vue'), meta:{ requiresAuth: 'admin'} },
     {path: '/formDesigner', name: '表单设计器', component: () => import('@/components/FormDesigner.vue'), meta:{ requiresAuth: 'admin'} },
     {path: '/projectList', name: '项目列表', component: () => import('@/components/ProjectList.vue')},
     {path: '/projectDetail/:id', name: '项目详情', component: () => import('@/components/ProjectDetail.vue'), props:true, hide:true },
@@ -69,5 +68,6 @@ router.afterEach((to, from) => {
         })
     }
 })
+
 
 export default router
