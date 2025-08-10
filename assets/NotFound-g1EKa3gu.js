@@ -1,0 +1,1 @@
+import{e as s,o as r,f as e,j as a,F as l,N as u}from"./vendor-Crb1Va-d.js";const k={__name:"NotFound",setup(c){const t=u(),n=()=>{console.log("-----------backToHome"),t.push("/")};return(m,o)=>(r(),s(l,null,[o[1]||(o[1]=e("h1",null,"404",-1)),e("p",null,[o[0]||(o[0]=a("你所寻找的页面不存在！ ")),e("button",{onClick:n},"回到首页")])],64))}};export{k as default};
